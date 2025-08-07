@@ -1,4 +1,4 @@
-import type { WeeklyTimetable } from "../types"
+import type { WeeklyTimetable } from "../types";
 
 export const aug11_sept26_2025: WeeklyTimetable = {
   id: "aug-11-sept-26-2025",
@@ -7,6 +7,12 @@ export const aug11_sept26_2025: WeeklyTimetable = {
     {
       day: "MON",
       sessions: [
+        {
+          unit: "Unit 2",
+          subject: "Networking",
+          instructor: "U Aung Bo Bo Kyaw",
+          time: "9:00 - 10:30",
+        },
         {
           unit: "Unit 3",
           subject: "Professional Practice",
@@ -24,11 +30,30 @@ export const aug11_sept26_2025: WeeklyTimetable = {
           instructor: "U Aung Bo Bo Kyaw",
           time: "9:00 - 10:30",
         },
+        {
+          unit: "Unit 3",
+          subject: "Professional Practice",
+          instructor: "Daw A Mon Oo",
+          time: "10:45 - 12:15",
+        },
       ],
     },
     {
       day: "WED",
-      sessions: [],
+      sessions: [
+        {
+          unit: "Unit 2",
+          subject: "Networking",
+          instructor: "U Aung Bo Bo Kyaw",
+          time: "9:00 - 10:30",
+        },
+        {
+          unit: "Unit 3",
+          subject: "Professional Practice",
+          instructor: "Daw A Mon Oo",
+          time: "10:45 - 12:15",
+        },
+      ],
     },
     {
       day: "THURS",
@@ -49,7 +74,28 @@ export const aug11_sept26_2025: WeeklyTimetable = {
     },
     {
       day: "FRI",
+      sessions: [
+        {
+          unit: "Unit 1",
+          subject: "Programming",
+          instructor: "Daw Yee Mon",
+          time: "9:00 - 10:30",
+        },
+        {
+          unit: "Unit 4",
+          subject: "Database Design & Development",
+          instructor: "Daw Phyu Hnin Thaw",
+          time: "10:45 - 12:15",
+        },
+      ],
+    },
+    {
+      day: "SAT",
+      sessions: [],
+    },
+    {
+      day: "SUN",
       sessions: [],
     },
   ],
-}
+};

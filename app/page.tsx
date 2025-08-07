@@ -1,16 +1,12 @@
-"use client"
+"use client";
 
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { MyanmarClock } from "@/components/myanmar-clock"
-import { DailyTimetableView } from "@/components/daily-timetable-view"
-import { FeedbackForm } from "@/components/feedback-form"
-import Image from "next/image"
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { MyanmarClock } from "@/components/myanmar-clock";
+import { DailyTimetableView } from "@/components/daily-timetable-view";
+import Image from "next/image";
 
 export default function Home() {
-  // Access the public reCAPTCHA site key on the server side
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-950 dark:to-black flex flex-col">
       <Header />
@@ -33,8 +29,13 @@ export default function Home() {
                 Timetable
               </span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-md sm:text-base">Year 1, Module 1</p>
-            <p className="text-gray-600 dark:text-gray-400 text-md sm:text-base"> Program Leader _ Daw Yee Mon</p>
+            <p className="text-gray-600 dark:text-gray-400 text-md sm:text-base">
+              Year 1, Module 1
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 text-md sm:text-base">
+              {" "}
+              Program Leader _ Daw Yee Mon
+            </p>
             <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
               Your personalized class schedule with real-time updates.
             </p>
@@ -47,14 +48,10 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <DailyTimetableView />
           </div>
-
-          <div className="max-w-xl mx-auto mt-16" id="feedback">
-            <FeedbackForm recaptchaSiteKey={recaptchaSiteKey} />
-          </div>
         </div>
       </main>
 
       <Footer />
     </div>
-  )
+  );
 }

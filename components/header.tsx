@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { GraduationCap, Moon, Sun } from "lucide-react"
-import { MobileSidebar } from "./mobile-sidebar"
-import Link from "next/link"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
+import { GraduationCap, Moon, Sun, Github } from "lucide-react";
+import { MobileSidebar } from "./mobile-sidebar";
+import Link from "next/link";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 export function Header() {
-  const { theme, setTheme, resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   // useEffect runs only on the client side after hydration
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   const handleNavigate = (section: string) => {
     // This will be handled by the MobileSidebar component
-  }
+  };
 
   return (
     <header
@@ -36,7 +36,9 @@ export function Header() {
               <h1 className="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-700 bg-clip-text text-transparent">
                 HND 68 Schedule
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Class Timetable</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Class Timetable
+              </p>
             </div>
           </Link>
 
@@ -62,29 +64,32 @@ export function Header() {
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <a
-              href="#today"
+            <Link
+              href="/"
               className="text-sm font-medium text-gray-600 hover:text-teal-600 transition-colors dark:text-gray-300 dark:hover:text-teal-400"
             >
-              Today
-            </a>
-            <a
-              href="#schedule"
-              className="text-sm font-medium text-gray-600 hover:text-teal-600 transition-colors dark:text-gray-300 dark:hover:text-teal-400"
-            >
-              Schedule
-            </a>
-            <a
-              href="#periods"
-              className="text-sm font-medium text-gray-600 hover:text-teal-600 transition-colors dark:text-gray-300 dark:hover:text-teal-400"
-            >
-              Periods
-            </a>
-            <a
+              Home
+            </Link>
+            <Link
               href="/assignments"
               className="text-sm font-medium text-gray-600 hover:text-teal-600 transition-colors dark:text-gray-300 dark:hover:text-teal-400"
             >
               Assignments
+            </Link>
+            <Link
+              href="/feedback"
+              className="text-sm font-medium text-gray-600 hover:text-teal-600 transition-colors dark:text-gray-300 dark:hover:text-teal-400"
+            >
+              Feedback
+            </Link>
+            <a
+              href="https://github.com/Orgpg/hnd-68-timetable"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-teal-600 transition-colors dark:text-gray-300 dark:hover:text-teal-400"
+              aria-label="View Source Code on GitHub"
+            >
+              <Github className="h-5 w-5" />
             </a>
             {/* Desktop Theme Toggle */}
             {mounted && ( // Only render on client after mount
@@ -106,5 +111,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-"use server"
+"use server";
 
-import { z } from "zod"
-import nodemailer from "nodemailer" // Import nodemailer
+import { z } from "zod";
+import nodemailer from "nodemailer"; // Import nodemailer
 
 // Define schema for feedback form data
 const feedbackSchema = z.object({
@@ -9,13 +9,15 @@ const feedbackSchema = z.object({
     required_error: "Feedback type is required.",
     invalid_type_error: "Invalid feedback type.",
   }),
-  email: z.string().email("Invalid email address.").min(1, "Email is required."),
+  email: z
+    .string()
+    .email("Invalid email address.")
+    .min(1, "Email is required."),
   message: z
     .string()
     .min(10, "Message must be at least 10 characters.")
     .max(500, "Message cannot exceed 500 characters."),
-  recaptchaToken: z.string().min(1, "reCAPTCHA verification is required."), // Add reCAPTCHA token to schema
-})
+});
 
 // Create a Nodemailer transporter using Zoho Mail SMTP
 const transporter = nodemailer.createTransport({
@@ -26,63 +28,37 @@ const transporter = nodemailer.createTransport({
     user: process.env.ZOHO_MAIL_USER,
     pass: process.env.ZOHO_MAIL_PASS,
   },
-})
+});
 
 export async function submitFeedback(prevState: any, formData: FormData) {
   const data = {
     type: formData.get("type"),
     email: formData.get("email"),
     message: formData.get("message"),
-    recaptchaToken: formData.get("recaptchaToken"), // Get reCAPTCHA token from form data
-  }
+  };
 
   // Validate data using zod
-  const parsed = feedbackSchema.safeParse(data)
+  const parsed = feedbackSchema.safeParse(data);
 
   if (!parsed.success) {
-    const errors = parsed.error.flatten().fieldErrors
+    const errors = parsed.error.flatten().fieldErrors;
     return {
       success: false,
       message: "Validation failed.",
       errors: errors,
-    }
+    };
   }
 
-  const { type, email, message, recaptchaToken } = parsed.data
-
-  // --- Server-side reCAPTCHA Verification (IMPORTANT FOR PRODUCTION) ---
-  // In a real application, you MUST send this token to Google's reCAPTCHA API
-  // for verification. This requires your RECAPTCHA_SECRET_KEY.
-  // Example:
-  // const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
-  // const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
-  // const recaptchaResponse = await fetch(verificationUrl, { method: 'POST' });
-  // const recaptchaData = await recaptchaResponse.json();
-  // if (!recaptchaData.success) {
-  //   console.error("reCAPTCHA verification failed:", recaptchaData['error-codes']);
-  //   return {
-  //     success: false,
-  //     message: "reCAPTCHA verification failed. Please try again.",
-  //     errors: { recaptchaToken: ["reCAPTCHA verification failed."] }
-  //   };
-  // }
-  // For this demo, we'll just assume it's valid if a token is present.
-  // In a real app, remove this placeholder check and use the actual API call above.
-  if (!recaptchaToken) {
-    return {
-      success: false,
-      message: "reCAPTCHA token missing. Please complete the reCAPTCHA.",
-      errors: { recaptchaToken: ["reCAPTCHA token missing."] },
-    }
-  }
-  // --- End of Server-side reCAPTCHA Verification Placeholder ---
+  const { type, email, message } = parsed.data;
 
   try {
     // 1. Send email to Admin
     const adminMailOptions = {
       from: `"Wai Phyo Aung" <${process.env.ZOHO_MAIL_USER}>`,
       to: "admin@waiphyoaung.dev",
-      subject: `HND 68 Timetable - New Feedback: ${type.charAt(0).toUpperCase() + type.slice(1)} from ${email}`,
+      subject: `HND 68 Timetable - New Feedback: ${
+        type.charAt(0).toUpperCase() + type.slice(1)
+      } from ${email}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <h2 style="color: #2a9d8f;">New Feedback Received for HND 68 Timetable</h2>
@@ -100,10 +76,10 @@ export async function submitFeedback(prevState: any, formData: FormData) {
           <p style="margin-top: 20px; font-size: 0.9em; color: #777;">This email was sent from the HND 68 Timetable feedback form.</p>
         </div>
       `,
-    }
+    };
 
-    await transporter.sendMail(adminMailOptions)
-    console.log("Admin email sent successfully.")
+    await transporter.sendMail(adminMailOptions);
+    console.log("Admin email sent successfully.");
 
     // 2. Send confirmation email to User
     const userMailOptions = {
@@ -124,20 +100,23 @@ export async function submitFeedback(prevState: any, formData: FormData) {
           <p style="margin-top: 20px; font-size: 0.9em; color: #777;">This is an automated confirmation email. Please do not reply directly to this message.</p>
         </div>
       `,
-    }
+    };
 
-    await transporter.sendMail(userMailOptions)
-    console.log("User confirmation email sent successfully.")
+    await transporter.sendMail(userMailOptions);
+    console.log("User confirmation email sent successfully.");
 
     return {
       success: true,
-      message: "Thank you for your feedback! A confirmation has been sent to your email.",
-    }
+      message:
+        "Thank you for your feedback! A confirmation has been sent to your email.",
+    };
   } catch (error: any) {
-    console.error("Failed to submit feedback or send email:", error)
+    console.error("Failed to submit feedback or send email:", error);
     return {
       success: false,
-      message: `Failed to submit feedback. Please try again later. Error: ${error.message || "Unknown error"}`,
-    }
+      message: `Failed to submit feedback. Please try again later. Error: ${
+        error.message || "Unknown error"
+      }`,
+    };
   }
 }
