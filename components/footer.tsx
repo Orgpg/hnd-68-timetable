@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Github, CalendarDays, Link, Mail } from "lucide-react" // Import Mail icon
+import { Github, CalendarDays, Link, Mail } from "lucide-react"; // Import Mail icon
 
 export function Footer() {
   return (
@@ -23,30 +23,42 @@ export function Footer() {
             <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
               {" "}
               {/* Added dark mode text color */}
-              Your essential companion for managing the HND 68 class schedule. Stay updated with real-time Myanmar time
-              and easily navigate your daily and weekly classes.
+              Your essential companion for managing the HND 68 class schedule.
+              Stay updated with real-time Myanmar time and easily navigate your
+              daily and weekly classes.
             </p>
           </div>
 
           {/* Section 2: Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Quick Links</h3>{" "}
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Quick Links
+            </h3>{" "}
             {/* Added dark mode text color */}
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               {" "}
               {/* Added dark mode text color */}
               <li>
-                <a href="#today" className="hover:text-teal-600 transition-colors dark:hover:text-teal-400">
+                <a
+                  href="#today"
+                  className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
+                >
                   Today's Schedule
                 </a>
               </li>
               <li>
-                <a href="#schedule" className="hover:text-teal-600 transition-colors dark:hover:text-teal-400">
+                <a
+                  href="#schedule"
+                  className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
+                >
                   Full Schedule
                 </a>
               </li>
               <li>
-                <a href="#periods" className="hover:text-teal-600 transition-colors dark:hover:text-teal-400">
+                <a
+                  href="#periods"
+                  className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
+                >
                   Semester Periods
                 </a>
               </li>
@@ -55,7 +67,9 @@ export function Footer() {
 
           {/* Section 3: Connect */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Connect</h3>{" "}
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Connect
+            </h3>{" "}
             {/* Added dark mode text color */}
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               {" "}
@@ -96,18 +110,26 @@ export function Footer() {
 
           {/* Section 4: Placeholder for future additions (e.g., Contact Info, Legal) */}
           <div className="space-y-4 hidden lg:block">
-            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">More Info</h3>{" "}
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+              More Info
+            </h3>{" "}
             {/* Added dark mode text color */}
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               {" "}
               {/* Added dark mode text color */}
               <li>
-                <a href="#" className="hover:text-teal-600 transition-colors dark:hover:text-teal-400">
+                <a
+                  href="#"
+                  className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
+                >
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-teal-600 transition-colors dark:hover:text-teal-400">
+                <a
+                  href="#"
+                  className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
+                >
                   Terms of Service
                 </a>
               </li>
@@ -122,9 +144,12 @@ export function Footer() {
         >
           {" "}
           {/* Added dark mode styles */}
-          <p className="mb-1">© {new Date().getFullYear()} waiphyoaung. All rights reserved.</p>
+          <p className="mb-1">
+            © {new Date().getFullYear()} waiphyoaung. All rights reserved.
+          </p>
+          <p className="text-xs">Version 1.0.0</p> {/* Added Version */}
         </div>
       </div>
     </footer>
-  )
+  );
 }
