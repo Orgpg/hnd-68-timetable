@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import type { ClassSession, DayOfWeek } from "@/lib/timetable/data"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Clock, BookOpen, Calendar, GraduationCap, Home, Sun } from "lucide-react"
+import type { ClassSession, DayOfWeek } from "@/lib/timetable/data";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Clock,
+  BookOpen,
+  Calendar,
+  GraduationCap,
+  Home,
+  Sun,
+} from "lucide-react";
 import {
   getDayName,
   getUnitColor,
@@ -10,17 +17,24 @@ import {
   isHoliday,
   isSessionCompleted,
   formatSessionTime,
-} from "@/lib/utils/date-utils"
+} from "@/lib/utils/date-utils";
 
 interface DailySchedulePreviewProps {
-  day: DayOfWeek
-  sessions: ClassSession[]
-  label: string
-  isToday?: boolean
+  day: DayOfWeek;
+  sessions: ClassSession[];
+  label: string;
+  isToday?: boolean;
+  fullDate: string; // Add this line
 }
 
-export function DailySchedulePreview({ day, sessions, label, isToday = false }: DailySchedulePreviewProps) {
-  const isHolidayDay = isHoliday(day)
+export function DailySchedulePreview({
+  day,
+  sessions,
+  label,
+  isToday = false,
+  fullDate,
+}: DailySchedulePreviewProps) {
+  const isHolidayDay = isHoliday(day);
 
   return (
     <Card
@@ -28,8 +42,8 @@ export function DailySchedulePreview({ day, sessions, label, isToday = false }: 
         isToday
           ? "bg-gradient-to-br from-blue-50 to-cyan-50 shadow-xl ring-2 ring-blue-400 dark:from-blue-950 dark:to-cyan-950 dark:ring-blue-600" // Dark mode for today
           : isHolidayDay
-            ? "bg-gradient-to-br from-orange-50 to-amber-50 shadow-md hover:from-orange-100 dark:from-orange-950 dark:to-amber-950 dark:hover:from-orange-900" // Dark mode for holiday
-            : "bg-gradient-to-br from-white to-gray-50 shadow-md hover:from-gray-100 dark:from-gray-900 dark:to-gray-950 dark:hover:from-gray-800" // Dark mode for default
+          ? "bg-gradient-to-br from-orange-50 to-amber-50 shadow-md hover:from-orange-100 dark:from-orange-950 dark:to-amber-950 dark:hover:from-orange-900" // Dark mode for holiday
+          : "bg-gradient-to-br from-white to-gray-50 shadow-md hover:from-gray-100 dark:from-gray-900 dark:to-gray-950 dark:hover:from-gray-800" // Dark mode for default
       }`}
     >
       <CardHeader
@@ -43,12 +57,16 @@ export function DailySchedulePreview({ day, sessions, label, isToday = false }: 
             isToday
               ? "text-blue-700 dark:text-blue-400"
               : isHolidayDay
-                ? "text-orange-700 dark:text-orange-400"
-                : "text-gray-700 dark:text-gray-300" // Dark mode text colors
+              ? "text-orange-700 dark:text-orange-400"
+              : "text-gray-700 dark:text-gray-300" // Dark mode text colors
           }`}
         >
           <div className="flex items-center gap-2">
-            {isHolidayDay ? <Home className="h-4 w-4 sm:h-5 sm:w-5" /> : <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />}
+            {isHolidayDay ? (
+              <Home className="h-4 w-4 sm:h-5 sm:w-5" />
+            ) : (
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
+            )}
             {label}
           </div>
           <div className="flex items-center gap-2 ml-auto">
@@ -56,10 +74,19 @@ export function DailySchedulePreview({ day, sessions, label, isToday = false }: 
               {getDayName(day)}
             </span>{" "}
             {/* Dark mode for day name badge */}
+            <span className="text-xs sm:text-sm font-normal text-gray-500 dark:text-gray-400">
+              {fullDate}
+            </span>
             {isToday && (
-              <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">Live</span>
+              <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                Live
+              </span>
             )}
-            {isHolidayDay && <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">Holiday</span>}
+            {isHolidayDay && (
+              <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                Holiday
+              </span>
+            )}
           </div>
         </CardTitle>
       </CardHeader>
@@ -69,7 +96,9 @@ export function DailySchedulePreview({ day, sessions, label, isToday = false }: 
             {" "}
             {/* Dark mode text color */}
             <Sun className="mx-auto mb-2 sm:mb-3 h-8 w-8 sm:h-12 sm:w-12 opacity-60" />
-            <h3 className="font-semibold mb-1 text-sm sm:text-base">Holiday - Rest Day</h3>
+            <h3 className="font-semibold mb-1 text-sm sm:text-base">
+              Holiday - Rest Day
+            </h3>
             <p className="text-xs sm:text-sm">Enjoy your weekend! 🌴</p>
           </div>
         ) : sessions.length === 0 ? (
@@ -77,18 +106,24 @@ export function DailySchedulePreview({ day, sessions, label, isToday = false }: 
             {" "}
             {/* Dark mode text color */}
             <BookOpen className="mx-auto mb-2 sm:mb-3 h-8 w-8 sm:h-12 sm:w-12 opacity-30" />
-            <h3 className="font-semibold mb-1 text-sm sm:text-base">No Classes Today</h3>
+            <h3 className="font-semibold mb-1 text-sm sm:text-base">
+              No Classes Today
+            </h3>
             <p className="text-xs sm:text-sm">Free day! 🎉</p>
           </div>
         ) : (
           <div className="space-y-2 sm:space-y-3">
             {sessions.map((session, index) => {
-              const isCompleted = isSessionCompleted(session, day)
+              const isCompleted = isSessionCompleted(session, day);
               return (
                 <div
                   key={index}
-                  className={`relative overflow-hidden bg-gradient-to-r ${getUnitColor(session.unit)} p-3 sm:p-4 rounded-xl text-white shadow-md transition-all duration-300 ${
-                    isCompleted ? "opacity-60 grayscale-[50%]" : "hover:shadow-lg hover:scale-[1.02]"
+                  className={`relative overflow-hidden bg-gradient-to-r ${getUnitColor(
+                    session.unit
+                  )} p-3 sm:p-4 rounded-xl text-white shadow-md transition-all duration-300 ${
+                    isCompleted
+                      ? "opacity-60 grayscale-[50%]"
+                      : "hover:shadow-lg hover:scale-[1.02]"
                   }`}
                 >
                   <div className="absolute top-2 right-2 text-lg sm:text-2xl opacity-70">
@@ -98,30 +133,38 @@ export function DailySchedulePreview({ day, sessions, label, isToday = false }: 
                   <div className="flex items-center gap-2 mb-2">
                     <Clock className="h-3 w-3 sm:h-4 w-4" />
                     <span
-                      className={`font-bold text-xs sm:text-sm bg-white/20 px-2 py-1 rounded-full ${isCompleted ? "line-through" : ""}`}
+                      className={`font-bold text-xs sm:text-sm bg-white/20 px-2 py-1 rounded-full ${
+                        isCompleted ? "line-through" : ""
+                      }`}
                     >
                       {formatSessionTime(session.time)}
                     </span>
                   </div>
 
                   <h4
-                    className={`font-bold text-xs sm:text-sm mb-2 pr-6 sm:pr-8 leading-tight ${isCompleted ? "line-through" : ""}`}
+                    className={`font-bold text-xs sm:text-sm mb-2 pr-6 sm:pr-8 leading-tight ${
+                      isCompleted ? "line-through" : ""
+                    }`}
                   >
                     {session.unit}
                   </h4>
 
                   <div className="flex items-center gap-2">
                     <GraduationCap className="h-3 w-3 sm:h-4 w-4" />
-                    <span className={`text-xs opacity-90 truncate ${isCompleted ? "line-through" : ""}`}>
+                    <span
+                      className={`text-xs opacity-90 truncate ${
+                        isCompleted ? "line-through" : ""
+                      }`}
+                    >
                       {session.teacher}
                     </span>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
