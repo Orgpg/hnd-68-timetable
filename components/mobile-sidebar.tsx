@@ -55,6 +55,12 @@ export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
       description: "Go to the main dashboard",
     },
     {
+      icon: CalendarDays,
+      label: "Schedule",
+      pathOrSection: "/schedule",
+      description: "View full weekly tables",
+    },
+    {
       icon: BookOpenCheck,
       label: "Assignments",
       pathOrSection: "/assignments",

@@ -55,12 +55,13 @@ export function getDayName(dayCode: DayOfWeek): string {
 }
 
 /**
- * Formats a Date object into a readable date string (e.g., "August 7, 2025").
+ * Formats a Date object into a readable date string (e.g., "August 7, 2025") in Myanmar timezone.
  * @param date The Date object to format.
  * @returns Formatted date string.
  */
 export function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
+    timeZone: "Asia/Yangon",
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -168,4 +169,21 @@ export function isWeekend(day: DayOfWeek): boolean {
 
 export function isHoliday(day: DayOfWeek): boolean {
   return isWeekend(day);
+}
+
+/**
+ * Checks if a class session has already completed based on an explicit calendar date in Myanmar timezone.
+ * @param session The ClassSession object.
+ * @param dateAtYGN The specific date in Myanmar timezone to check against.
+ * @returns True if the session's end time is in the past relative to the given date, false otherwise.
+ */
+export function isSessionCompletedAtDate(
+  session: ClassSession,
+  dateAtYGN: Date
+): boolean {
+  const now = getMyanmarDate();
+  const timeRange = session.time.replace(/\s/g, "");
+  const [_, endStr] = timeRange.split("-");
+  const end = parseTime(endStr, dateAtYGN);
+  return now.getTime() > end.getTime();
 }
