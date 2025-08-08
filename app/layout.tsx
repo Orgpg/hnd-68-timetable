@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "HND 68 Timetable - Your Daily Schedule",
     description:
       "Stay organized with your HND 68 class timetable, real-time Myanmar time, and daily schedule previews.",
-    url: "https://hnd68.vercel.app/",
+    url: "https://hnd68.orgpg.top/",
     siteName: "HND 68 Timetable",
     images: [
       {
