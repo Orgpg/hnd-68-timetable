@@ -9,14 +9,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
+import { Table, TableRow, TableBody, TableCell } from "@/components/ui/table";
 import {
   Sparkles,
   CalendarDays,
@@ -480,24 +473,6 @@ export default function SchedulePage() {
                       <CardContent className="p-5">
                         <div className="overflow-x-auto">
                           <Table>
-                            <TableHeader className="sticky top-[calc(8.5rem+56px)] z-10 bg-gray-100 dark:bg-gray-800">
-                              <TableRow>
-                                <TableHead className="w-[180px]">
-                                  Date
-                                </TableHead>
-                                <TableHead className="w-[110px]">Day</TableHead>
-                                <TableHead className="w-[160px]">
-                                  Time
-                                </TableHead>
-                                <TableHead>Unit</TableHead>
-                                <TableHead className="w-[280px]">
-                                  Teacher
-                                </TableHead>
-                                <TableHead className="w-[120px] text-right">
-                                  Status
-                                </TableHead>
-                              </TableRow>
-                            </TableHeader>
                             <TableBody>
                               {filtered.length === 0 ? (
                                 <TableRow>

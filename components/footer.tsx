@@ -40,7 +40,7 @@ export function Footer() {
               {/* Added dark mode text color */}
               <li>
                 <a
-                  href="#today"
+                  href="/"
                   className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
                 >
                   Today's Schedule
@@ -48,7 +48,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#schedule"
+                  href="/schedule"
                   className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
                 >
                   Full Schedule
@@ -56,10 +56,10 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#periods"
+                  href="/assignments"
                   className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
                 >
-                  Semester Periods
+                  Assignments
                 </a>
               </li>
             </ul>

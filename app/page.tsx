@@ -5,6 +5,9 @@ import { Footer } from "@/components/footer";
 import { MyanmarClock } from "@/components/myanmar-clock";
 import { DailyTimetableView } from "@/components/daily-timetable-view";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { CalendarDays } from "lucide-react";
 
 export default function Home() {
   return (
@@ -45,8 +48,23 @@ export default function Home() {
             <MyanmarClock />
           </div>
 
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto space-y-12">
             <DailyTimetableView />
+            {/* Centered call-to-action */}
+            <div className="pt-6 sm:pt-8 flex justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full px-6 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white shadow-md"
+              >
+                <Link href="/schedule" aria-label="Open full weekly schedule">
+                  <span className="inline-flex items-center gap-2">
+                    <CalendarDays className="h-5 w-5" />
+                    View full schedule
+                  </span>
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </main>
