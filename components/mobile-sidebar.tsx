@@ -154,7 +154,7 @@ export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
               {" "}
               {/* Dark mode for text */}
               <Info className="h-3 w-3" />
-              Version 1.0.0
+              Version 1.1.0
             </p>
           </div>
         </div>

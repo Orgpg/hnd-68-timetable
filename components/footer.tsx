@@ -62,6 +62,14 @@ export function Footer() {
                   Assignments
                 </a>
               </li>
+              <li>
+                <a
+                  href="/reminder"
+                  className="hover:text-teal-600 transition-colors dark:hover:text-teal-400"
+                >
+                  Reminder
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -147,7 +155,7 @@ export function Footer() {
           <p className="mb-1">
             © {new Date().getFullYear()} waiphyoaung. All rights reserved.
           </p>
-          <p className="text-xs">Version 1.0.0</p> {/* Added Version */}
+          <p className="text-xs">Version 1.1.0</p> {/* Added Version */}
         </div>
       </div>
     </footer>
