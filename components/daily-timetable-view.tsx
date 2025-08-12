@@ -1,86 +1,126 @@
-"use client"
+"use client";
 
-import { useEffect, useMemo, useState } from "react"
-import type { DayOfWeek, ClassSession } from "@/lib/timetable/data"
+import { useMemo, useState } from "react";
+import type { DayOfWeek, ClassSession } from "@/lib/timetable/data";
 import {
   getMyanmarDate,
   formatDate,
   formatSessionTime,
-  getUnitColor,
   getUnitIcon,
   getDayName,
   isHoliday,
-  parseTime, // optional local use
-} from "@/lib/utils/date-utils"
-import { DailySchedulePreview } from "./daily-schedule-preview"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar, ChevronLeft, ChevronRight, BookOpen, Clock, GraduationCap, Home, Sparkles, Sun } from 'lucide-react'
-import { getDailyEntryByDate, ygnDateKey, getPeriodLabelFor } from "@/lib/timetable"
+  parseTime,
+} from "@/lib/utils/date-utils";
+import { DailySchedulePreview } from "./daily-schedule-preview";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  BookOpen,
+  Clock,
+  GraduationCap,
+  Home,
+  Sparkles,
+  Sun,
+  Zap,
+} from "lucide-react";
+import {
+  getDailyEntryByDate,
+  ygnDateKey,
+  getPeriodLabelFor,
+} from "@/lib/timetable";
 
-// Helper to add days (works in local Date; display handled via Myanmar TZ formatters)
+// Helper to add days
 function addDays(d: Date, n: number) {
-  const x = new Date(d)
-  x.setDate(x.getDate() + n)
-  return x
+  const x = new Date(d);
+  x.setDate(x.getDate() + n);
+  return x;
+}
+
+// Enhanced unit colors for dark theme
+function getEnhancedUnitColor(unit: string): string {
+  if (unit.includes("Unit 1")) return "from-blue-500 to-blue-600";
+  if (unit.includes("Unit 2")) return "from-emerald-500 to-green-600";
+  if (unit.includes("Unit 3")) return "from-purple-500 to-violet-600";
+  if (unit.includes("Unit 4")) return "from-orange-500 to-red-500";
+  return "from-gray-500 to-gray-600";
 }
 
 // Determines if a class session for a specific calendar date is already completed
-function isSessionCompletedAtDateLocal(session: ClassSession, dateAtYGN: Date): boolean {
-  // Current "now" in Myanmar time
-  const now = getMyanmarDate()
-
-  // Normalize "HH:MM-HH:MM" variants (strip spaces)
-  const timeRange = session.time.replace(/\s/g, "")
-  const [_, endStr] = timeRange.split("-")
-  const end = parseTime(endStr, dateAtYGN)
-  return now.getTime() > end.getTime()
+function isSessionCompletedAtDateLocal(
+  session: ClassSession,
+  dateAtYGN: Date
+): boolean {
+  const now = getMyanmarDate();
+  const timeRange = session.time.replace(/\s/g, "");
+  const [_, endStr] = timeRange.split("-");
+  const end = parseTime(endStr, dateAtYGN);
+  return now.getTime() > end.getTime();
 }
 
 export function DailyTimetableView() {
   // Anchor everything to Myanmar time
-  const todayYGN = useMemo(() => getMyanmarDate(), [])
-  const [selectedDate, setSelectedDate] = useState<Date>(todayYGN)
+  const todayYGN = useMemo(() => getMyanmarDate(), []);
+  const [selectedDate, setSelectedDate] = useState<Date>(todayYGN);
 
-  // Today / Tomorrow entries (date-aware, from the new daily files)
-  const todayEntry = useMemo(() => getDailyEntryByDate(todayYGN), [todayYGN])
-  const tomorrowEntry = useMemo(() => getDailyEntryByDate(addDays(todayYGN, 1)), [todayYGN])
+  // Today / Tomorrow entries
+  const todayEntry = useMemo(() => getDailyEntryByDate(todayYGN), [todayYGN]);
+  const tomorrowEntry = useMemo(
+    () => getDailyEntryByDate(addDays(todayYGN, 1)),
+    [todayYGN]
+  );
 
-  const todayFullDate = useMemo(() => formatDate(todayYGN), [todayYGN])
-  const tomorrowFullDate = useMemo(() => formatDate(addDays(todayYGN, 1)), [todayYGN])
+  const todayFullDate = useMemo(() => formatDate(todayYGN), [todayYGN]);
+  const tomorrowFullDate = useMemo(
+    () => formatDate(addDays(todayYGN, 1)),
+    [todayYGN]
+  );
 
   // Selected day entry
-  const selectedEntry = useMemo(() => getDailyEntryByDate(selectedDate), [selectedDate])
-  const selectedFullDate = useMemo(() => formatDate(selectedDate), [selectedDate])
+  const selectedEntry = useMemo(
+    () => getDailyEntryByDate(selectedDate),
+    [selectedDate]
+  );
+  const selectedFullDate = useMemo(
+    () => formatDate(selectedDate),
+    [selectedDate]
+  );
 
-  const periodLabel = useMemo(() => getPeriodLabelFor(ygnDateKey(selectedDate)), [selectedDate])
+  const periodLabel = useMemo(
+    () => getPeriodLabelFor(ygnDateKey(selectedDate)),
+    [selectedDate]
+  );
 
   // Handlers for arrow navigation
-  const prevDay = () => setSelectedDate((d) => addDays(d, -1))
-  const nextDay = () => setSelectedDate((d) => addDays(d, 1))
+  const prevDay = () => setSelectedDate((d) => addDays(d, -1));
+  const nextDay = () => setSelectedDate((d) => addDays(d, 1));
 
   const selectedIsHoliday = selectedEntry
-    ? isHoliday(selectedEntry.dayCode as DayOfWeek) || Boolean(selectedEntry.label)
-    : false
+    ? isHoliday(selectedEntry.dayCode as DayOfWeek) ||
+      Boolean(selectedEntry.label)
+    : false;
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-8">
       {/* Period Label */}
-      <Card className="bg-gradient-to-r from-white to-gray-50 border-none shadow-lg dark:from-gray-900 dark:to-gray-950">
-        <CardHeader className="p-4 sm:p-6 flex flex-col items-center justify-center text-center">
-          <CardTitle className="text-lg sm:text-xl mb-1 flex flex-col sm:flex-row items-center gap-2 text-gray-800 dark:text-gray-200">
-            <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-teal-600" />
-            <span className="hidden sm:inline">HND 68 Timetable</span>
-            <span className="sm:hidden">HND 68</span>
+      <Card className="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-800 border-slate-600/30 shadow-xl">
+        <CardHeader className="p-6 flex flex-col items-center justify-center text-center">
+          <CardTitle className="text-xl mb-2 flex flex-col sm:flex-row items-center gap-3 text-white">
+            <div className="p-2 bg-teal-500/20 rounded-xl backdrop-blur-sm">
+              <Calendar className="h-6 w-6 text-teal-400" />
+            </div>
+            <span>HND 68 Timetable</span>
           </CardTitle>
-          <p className="text-xs sm:text-sm text-gray-600 bg-gray-100 px-2 sm:px-3 py-1 rounded-full inline-block dark:text-gray-400 dark:bg-gray-800">
+          <p className="text-sm text-gray-300 bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm">
             {periodLabel}
           </p>
         </CardHeader>
       </Card>
 
-      {/* Today & Tomorrow Preview (date-aware) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6" id="today">
+      {/* Today & Tomorrow Preview */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" id="today">
         <DailySchedulePreview
           day={(todayEntry?.dayCode as DayOfWeek) ?? "MON"}
           sessions={(todayEntry?.sessions as ClassSession[]) ?? []}
@@ -100,43 +140,61 @@ export function DailyTimetableView() {
         />
       </div>
 
-      {/* Day-to-day Navigator with < > arrows (date-driven) */}
-      <Card
-        className={`border-none shadow-lg ${
+      {/* Day Navigator */}
+      <div
+        className={`relative overflow-hidden rounded-3xl border shadow-2xl ${
           selectedIsHoliday
-            ? "bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-950 dark:to-amber-950"
-            : "bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-950 dark:to-cyan-950"
+            ? "bg-gradient-to-r from-slate-800 via-orange-900 to-slate-800 border-orange-400/30"
+            : "bg-gradient-to-r from-slate-800 via-teal-900 to-slate-800 border-teal-400/30"
         }`}
         id="schedule"
       >
-        <CardHeader className="p-4 sm:p-6">
+        {/* Background decoration */}
+        <div className="absolute inset-0">
+          <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-4 left-4 w-24 h-24 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-xl"></div>
+        </div>
+
+        <CardHeader className="relative z-10 p-6 bg-black/20 backdrop-blur-sm">
           <div className="flex items-center justify-between">
             <Button
               variant="outline"
               onClick={prevDay}
               size="sm"
-              className="rounded-full bg-white/70 hover:bg-white border-gray-200 dark:bg-gray-800/70 dark:hover:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
+              className="rounded-full bg-black/30 hover:bg-black/50 border-white/20 text-white backdrop-blur-sm"
               aria-label="Previous day"
             >
-              <ChevronLeft className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+              <ChevronLeft className="h-4 w-4" />
             </Button>
 
-            <CardTitle className="text-lg sm:text-2xl flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center">
-              {selectedIsHoliday ? (
-                <Home className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600" />
-              ) : (
-                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-teal-600" />
-              )}
-              <span
-                className={`bg-gradient-to-r ${
-                  selectedIsHoliday ? "from-orange-600 to-amber-600" : "from-teal-600 to-cyan-600"
-                } bg-clip-text text-transparent`}
+            <CardTitle className="flex flex-col sm:flex-row items-center gap-3 text-center text-white">
+              <div
+                className={`p-2 rounded-xl backdrop-blur-sm ${
+                  selectedIsHoliday ? "bg-orange-500/20" : "bg-teal-500/20"
+                }`}
               >
-                {(selectedEntry?.dayCode ?? "MON") + " - " + getDayName((selectedEntry?.dayCode as DayOfWeek) ?? "MON")}
-              </span>
-              <span className="text-sm text-gray-600 dark:text-gray-400">{selectedFullDate}</span>
+                {selectedIsHoliday ? (
+                  <Home className="h-6 w-6 text-orange-400" />
+                ) : (
+                  <Sparkles className="h-6 w-6 text-teal-400" />
+                )}
+              </div>
+              <div>
+                <div
+                  className={`text-xl font-bold bg-gradient-to-r ${
+                    selectedIsHoliday
+                      ? "from-orange-400 to-red-400"
+                      : "from-teal-400 to-cyan-400"
+                  } bg-clip-text text-transparent`}
+                >
+                  {(selectedEntry?.dayCode ?? "MON") +
+                    " - " +
+                    getDayName((selectedEntry?.dayCode as DayOfWeek) ?? "MON")}
+                </div>
+                <div className="text-sm text-gray-300">{selectedFullDate}</div>
+              </div>
               {selectedIsHoliday && (
-                <span className="text-sm bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
+                <span className="text-sm bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full backdrop-blur-sm">
                   {selectedEntry?.label ?? "Holiday"}
                 </span>
               )}
@@ -146,81 +204,123 @@ export function DailyTimetableView() {
               variant="outline"
               onClick={nextDay}
               size="sm"
-              className="rounded-full bg-white/70 hover:bg-white border-gray-200 dark:bg-gray-800/70 dark:hover:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
+              className="rounded-full bg-black/30 hover:bg-black/50 border-white/20 text-white backdrop-blur-sm"
               aria-label="Next day"
             >
-              <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
         </CardHeader>
-      </Card>
+      </div>
 
-      {/* Selected Day Detail (date-aware, completed state against actual Myanmar now) */}
-      <Card className="overflow-hidden shadow-xl border-none">
-        <CardContent className="p-0">
+      {/* Selected Day Detail */}
+      <Card className="overflow-hidden shadow-2xl border-none bg-gradient-to-br from-slate-800 to-slate-900">
+        <CardContent className="p-5">
           {selectedEntry && selectedEntry.sessions.length > 0 ? (
             <div className="space-y-0">
               {selectedEntry.sessions.map((session, index) => {
-                const completed = isSessionCompletedAtDateLocal(session as ClassSession, selectedDate)
+                const completed = isSessionCompletedAtDateLocal(
+                  session as ClassSession,
+                  selectedDate
+                );
                 return (
                   <div
                     key={`${ygnDateKey(selectedDate)}_${index}`}
-                    className={`relative overflow-hidden bg-gradient-to-r ${getUnitColor(session.unit)} p-4 sm:p-6 text-white ${
-                      index === 0 ? "rounded-t-lg" : ""
-                    } ${index === selectedEntry.sessions.length - 1 ? "rounded-b-lg" : ""} transition-all duration-300 ${
-                      completed ? "opacity-60 grayscale-[50%]" : "hover:shadow-lg"
+                    className={`relative overflow-hidden bg-gradient-to-r ${getEnhancedUnitColor(
+                      session.unit
+                    )} p-6 text-white ${index === 0 ? "rounded-t-lg" : ""} ${
+                      index === selectedEntry.sessions.length - 1
+                        ? "rounded-b-lg"
+                        : ""
+                    } transition-all duration-300 ${
+                      completed
+                        ? "opacity-60 grayscale-[50%]"
+                        : "hover:shadow-lg"
                     }`}
                   >
-                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4 text-2xl sm:text-4xl opacity-30">
+                    {/* Background decoration */}
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="absolute top-4 right-4 text-4xl opacity-20">
                       {getUnitIcon(session.unit)}
                     </div>
 
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                      <Clock className="h-4 w-4 sm:h-6 sm:w-6" />
-                      <span
-                        className={`font-bold text-base sm:text-xl bg-white/20 px-3 sm:px-4 py-1 sm:py-2 rounded-full ${
+                    <div className="relative z-10">
+                      {/* Time badge */}
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="bg-black/20 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-2">
+                          <Clock className="h-5 w-5" />
+                          <span
+                            className={`font-bold text-lg ${
+                              completed ? "line-through" : ""
+                            }`}
+                          >
+                            {formatSessionTime(session.time)}
+                          </span>
+                        </div>
+                        {completed && (
+                          <div className="bg-black/30 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
+                            <Zap className="h-3 w-3" />
+                            <span className="text-xs">Completed</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Unit title */}
+                      <h3
+                        className={`font-bold text-2xl mb-4 pr-16 leading-tight ${
                           completed ? "line-through" : ""
                         }`}
                       >
-                        {formatSessionTime(session.time)}
-                      </span>
-                    </div>
+                        {session.unit}
+                      </h3>
 
-                    <h3
-                      className={`font-bold text-lg sm:text-2xl mb-2 sm:mb-3 pr-12 sm:pr-16 leading-tight ${
-                        completed ? "line-through" : ""
-                      }`}
-                    >
-                      {session.unit}
-                    </h3>
-
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5" />
-                      <span className={`text-sm sm:text-lg opacity-90 ${completed ? "line-through" : ""}`}>
-                        {session.teacher}
-                      </span>
+                      {/* Teacher info */}
+                      <div className="flex items-center gap-3">
+                        <div className="bg-black/20 backdrop-blur-sm rounded-full p-2">
+                          <GraduationCap className="h-5 w-5" />
+                        </div>
+                        <span
+                          className={`text-lg opacity-90 ${
+                            completed ? "line-through" : ""
+                          }`}
+                        >
+                          {session.teacher}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
           ) : selectedIsHoliday ? (
-            <div className="text-center text-orange-600 dark:text-orange-400 py-12 sm:py-16 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950 dark:to-amber-950">
-              <Sun className="mx-auto mb-3 sm:mb-4 h-12 w-12 sm:h-16 sm:w-16 opacity-60" />
-              <h3 className="text-xl sm:text-2xl font-bold mb-2">
-                {selectedEntry?.label ? selectedEntry.label : "Holiday - Rest Day"}
+            <div className="text-center py-16 bg-gradient-to-br from-orange-900/20 to-red-900/20">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
+                <Sun className="h-10 w-10 text-orange-400" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-orange-300">
+                {selectedEntry?.label
+                  ? selectedEntry.label
+                  : "Holiday - Rest Day"}
               </h3>
-              <p className="text-base sm:text-lg">Time to relax and recharge! 🌴☀️</p>
+              <p className="text-lg text-orange-200/70">
+                Time to relax and recharge! 🌴☀️
+              </p>
             </div>
           ) : (
-            <div className="text-center text-gray-500 dark:text-gray-400 py-12 sm:py-16 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-950">
-              <BookOpen className="mx-auto mb-3 sm:mb-4 h-12 w-12 sm:h-16 sm:w-16 opacity-30" />
-              <h3 className="text-xl sm:text-2xl font-bold mb-2">No Classes Scheduled</h3>
-              <p className="text-base sm:text-lg">Perfect day for self-study! 📚✨</p>
+            <div className="text-center py-16 bg-gradient-to-br from-slate-700/20 to-slate-800/20">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-slate-600/20 to-slate-700/20 rounded-3xl flex items-center justify-center backdrop-blur-sm">
+                <BookOpen className="h-10 w-10 text-slate-400" />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-slate-300">
+                No Classes Scheduled
+              </h3>
+              <p className="text-lg text-slate-400">
+                Perfect day for self-study! 📚✨
+              </p>
             </div>
           )}
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

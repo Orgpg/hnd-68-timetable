@@ -54,7 +54,6 @@ export const metadata: Metadata = {
     creator: "@vercel",
     images: ["/logo.png?height=630&width=1200"],
   },
-    generator: 'v0.dev'
 }
 
 export const viewport: Viewport = {
