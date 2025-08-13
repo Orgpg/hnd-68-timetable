@@ -1,28 +1,67 @@
 "use client";
 
-import { Github, CalendarDays, Link, Mail } from "lucide-react"; // Import Mail icon
+import { Github, CalendarDays, Link, Mail, Users } from "lucide-react"; // Import Mail icon and Users icon
+import { useEffect, useState } from "react"; // Added React hooks for state management
 
 export function Footer() {
+  const [subscriberCount, setSubscriberCount] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSubscriberCount = async () => {
+      try {
+        const response = await fetch("/api/stats");
+        const data = await response.json();
+        if (data.success) {
+          setSubscriberCount(data.subscriberCount);
+        }
+      } catch (error) {
+        console.error("Failed to fetch subscriber count:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSubscriberCount();
+  }, []);
+
   return (
     <footer
       className="mt-16 border-t border-gray-200 bg-white py-10 sm:py-14
     dark:border-gray-800 dark:bg-gray-950"
     >
-      {" "}
-      {/* Added dark mode styles */}
       <div className="max-w-7xl mx-auto px-4">
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-full border border-teal-200 dark:border-teal-700">
+            <Users className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+            <span className="text-sm font-medium text-teal-800 dark:text-teal-200">
+              {isLoading ? (
+                "Loading subscribers..."
+              ) : subscriberCount !== null ? (
+                <>
+                  <span className="font-bold text-lg">
+                    {subscriberCount.toLocaleString()}
+                  </span>
+                  <span className="ml-1">active subscribers</span>
+                </>
+              ) : (
+                "Subscriber count unavailable"
+              )}
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            Join our community for daily timetable reminders
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-12">
           {/* Section 1: About */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-gray-800 dark:text-gray-200">
-              {" "}
-              {/* Added dark mode text color */}
               <CalendarDays className="h-6 w-6 text-teal-600" />
               <h3 className="text-lg font-semibold">HND 68 Timetable</h3>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-              {" "}
-              {/* Added dark mode text color */}
               Your essential companion for managing the HND 68 class schedule.
               Stay updated with real-time Myanmar time and easily navigate your
               daily and weekly classes.
@@ -150,8 +189,6 @@ export function Footer() {
           className="mt-10 pt-6 border-t border-gray-200 text-center text-sm text-gray-500
         dark:border-gray-800 dark:text-gray-500"
         >
-          {" "}
-          {/* Added dark mode styles */}
           <p className="mb-1">
             © {new Date().getFullYear()} waiphyoaung. All rights reserved.
           </p>
