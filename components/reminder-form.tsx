@@ -1,61 +1,80 @@
-"use client"
+"use client";
 
-import { useActionState, useEffect, useRef } from "react"
-import { subscribeToReminder } from "@/app/actions/reminder"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "react-hot-toast"
-import { Loader2, BellRing } from "lucide-react"
-import { useSearchParams, useRouter } from "next/navigation" // Import useSearchParams and useRouter
+import { useActionState, useEffect, useRef } from "react";
+import { subscribeToReminder } from "@/app/actions/reminder";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "react-hot-toast";
+import { Loader2, BellRing, AlertCircle } from "lucide-react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export function ReminderForm() {
-  const [subscribeState, subscribeAction, isSubscribing] = useActionState(subscribeToReminder, null)
-  const formRef = useRef<HTMLFormElement>(null)
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const [subscribeState, subscribeAction, isSubscribing] = useActionState(
+    subscribeToReminder,
+    null
+  );
+  const formRef = useRef<HTMLFormElement>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     if (subscribeState) {
       if (subscribeState.success) {
-        toast.success(subscribeState.message)
-        formRef.current?.reset() // Reset form on success
+        if (subscribeState.isExisting) {
+          toast.success(subscribeState.message, {
+            icon: <AlertCircle className="h-4 w-4" />,
+            duration: 4000,
+          });
+        } else {
+          toast.success(subscribeState.message);
+        }
+        formRef.current?.reset(); // Reset form on success
       } else {
-        toast.error(subscribeState.message)
+        toast.error(subscribeState.message);
         if (subscribeState.errors) {
           Object.values(subscribeState.errors).forEach((errorMessages) => {
             if (Array.isArray(errorMessages)) {
-              errorMessages.forEach((msg) => toast.error(msg))
+              errorMessages.forEach((msg) => toast.error(msg));
             }
-          })
+          });
         }
       }
     }
 
     // Handle unsubscribe success message from URL params
-    const status = searchParams.get("status")
-    const email = searchParams.get("email")
+    const status = searchParams.get("status");
+    const email = searchParams.get("email");
     if (status === "unsubscribed" && email) {
-      toast.success(`You have successfully unsubscribed from reminders for ${email}. Your data has been removed.`)
+      toast.success(
+        `You have successfully unsubscribed from reminders for ${email}. Your data has been removed.`
+      );
       // Clear the query parameters from the URL
-      router.replace("/reminder", { scroll: false })
+      router.replace("/reminder", { scroll: false });
     }
-  }, [subscribeState, searchParams, router])
+  }, [subscribeState, searchParams, router]);
 
-  const isPending = isSubscribing
+  const isPending = isSubscribing;
 
   return (
     <div
       className="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100
     dark:bg-gray-950 dark:border-gray-800"
     >
-      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Timetable Reminders</h3>
+      <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+        Timetable Reminders
+      </h3>
       <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">
-        Subscribe to get daily timetable reminders directly to your email! You will receive two emails per day: one at{" "}
-        <span className="font-semibold text-teal-600 dark:text-teal-400">9:00 PM</span> (Myanmar Time) for the next
-        day&apos;s schedule, and another at{" "}
-        <span className="font-semibold text-teal-600 dark:text-teal-400">7:00 AM</span> (Myanmar Time) as a morning
-        refresher.
+        Subscribe to get daily timetable reminders directly to your email! You
+        will receive two emails per day: one at{" "}
+        <span className="font-semibold text-teal-600 dark:text-teal-400">
+          9:00 PM
+        </span>{" "}
+        (Myanmar Time) for the next day&apos;s schedule, and another at{" "}
+        <span className="font-semibold text-teal-600 dark:text-teal-400">
+          7:00 AM
+        </span>{" "}
+        (Myanmar Time) as a morning refresher.
       </p>
       <form ref={formRef} className="space-y-4">
         <div>
@@ -71,7 +90,11 @@ export function ReminderForm() {
             className="mt-1 bg-gray-50 border-gray-200 focus:ring-teal-500
             dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:placeholder-gray-500 dark:focus:ring-teal-500"
           />
-          {subscribeState?.errors?.name && <p className="text-red-500 text-xs mt-1">{subscribeState.errors.name[0]}</p>}
+          {subscribeState?.errors?.name && (
+            <p className="text-red-500 text-xs mt-1">
+              {subscribeState.errors.name[0]}
+            </p>
+          )}
         </div>
 
         <div>
@@ -88,11 +111,11 @@ export function ReminderForm() {
             dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:placeholder-gray-500 dark:focus:ring-teal-500"
           />
           {subscribeState?.errors?.email && (
-            <p className="text-red-500 text-xs mt-1">{subscribeState.errors.email[0]}</p>
+            <p className="text-red-500 text-xs mt-1">
+              {subscribeState.errors.email[0]}
+            </p>
           )}
         </div>
-
-        {/* Removed date input field and time input field */}
 
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <Button
@@ -114,12 +137,13 @@ export function ReminderForm() {
         </div>
       </form>
       <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
-        If you don&apos;t see the emails, please check your spam or junk folder and mark them as &quot;not spam&quot; to
-        ensure delivery.
+        If you don&apos;t see the emails, please check your spam or junk folder
+        and mark them as &quot;not spam&quot; to ensure delivery.
       </p>
       <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
-        To unsubscribe from reminders, please use the unsubscribe link provided in your reminder emails.
+        To unsubscribe from reminders, please use the unsubscribe link provided
+        in your reminder emails.
       </p>
     </div>
-  )
+  );
 }
