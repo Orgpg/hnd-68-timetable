@@ -16,34 +16,6 @@ export default function Home() {
 
       <main className="flex-1 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8 sm:mb-12 relative">
-            {/* Logo */}
-            <Image
-              src="/hero.png" // Use the new logo image
-              alt="Gusto College Logo"
-              width={200} // Increased width
-              height={120} // Increased height
-              className="mx-auto mb-4 rounded-lg shadow-lg" // Adjusted class for the new logo shape
-            />
-
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-gray-100 mb-3">
-              HND 68{" "}
-              <span className="bg-gradient-to-r from-teal-500 to-cyan-600 bg-clip-text text-transparent">
-                Timetable
-              </span>
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-md sm:text-base">
-              Year 1, Module 1
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 text-md sm:text-base">
-              {" "}
-              Program Leader _ Daw Yee Mon
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
-              Your personalized class schedule with real-time updates.
-            </p>
-          </div>
-
           <div className="mb-8 sm:mb-12 max-w-4xl mx-auto">
             <MyanmarClock />
           </div>
