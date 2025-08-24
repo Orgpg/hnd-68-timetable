@@ -18,10 +18,10 @@ export const jul23_27_2025_daily: DailyEntry[] = [
     date: "2025-07-23",
     dayCode: "WED",
     sessions: [
-      { time: "9:00-10:30", unit: "Unit 2 - Orientation", teacher: "Academic" },
+      { time: "9:00-10:30", unit: "Orientation", teacher: "Academic" },
       {
         time: "10:45-12:15",
-        unit: "Unit 4 - Orientation",
+        unit: "Orientation",
         teacher: "Academic",
       },
     ],
@@ -32,12 +32,12 @@ export const jul23_27_2025_daily: DailyEntry[] = [
     sessions: [
       {
         time: "9:00-10:30",
-        unit: "Unit 1 - Induction (Academic)",
+        unit: "Induction (Academic)",
         teacher: "Academic",
       },
       {
         time: "10:45-12:15",
-        unit: "Unit 2 - Induction (Academic)",
+        unit: "Induction (Academic)",
         teacher: "Academic",
       },
     ],

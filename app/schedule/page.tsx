@@ -163,7 +163,7 @@ export default function SchedulePage() {
   const [hideHolidays, setHideHolidays] = useState(false);
 
   // Scroll to current week
-  const weekRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const weekRefs = useRef<Record<string, HTMLElement | null>>({});
   const nowYGN = getMyanmarDate();
   const currentWeekKey = useMemo(
     () => ymdKey(startOfWeekMonday(nowYGN)),
@@ -365,7 +365,9 @@ export default function SchedulePage() {
               return (
                 <section
                   key={week.weekKey}
-                  ref={(el) => (weekRefs.current[week.weekKey] = el)}
+                  ref={(el) => {
+                    weekRefs.current[week.weekKey] = el;
+                  }}
                   className="scroll-mt-24"
                 >
                   {/* Week header */}
