@@ -99,7 +99,7 @@ export const aug11_sept26_2025_daily: DailyEntry[] = [
   { date: "2025-09-07", dayCode: "SUN", label: "Holiday", sessions: [] },
 
   // Week of Sep 8 — attachment does not list Mon 8, so we keep it as a day with no classes.
-  { date: "2025-09-08", dayCode: "MON", label: "Holiday", sessions: [] },
+  { date: "2025-09-08", dayCode: "MON", sessions: sessionsFor("MON") },
   { date: "2025-09-09", dayCode: "TUE", sessions: sessionsFor("TUE") },
   { date: "2025-09-10", dayCode: "WED", sessions: sessionsFor("WED") },
   { date: "2025-09-11", dayCode: "THURS", sessions: sessionsFor("THURS") },
@@ -108,7 +108,7 @@ export const aug11_sept26_2025_daily: DailyEntry[] = [
   { date: "2025-09-14", dayCode: "SUN", label: "Holiday", sessions: [] },
 
   // Week of Sep 15 — attachment does not list Mon 15
-  { date: "2025-09-15", dayCode: "MON", label: "Holiday", sessions: [] },
+  { date: "2025-09-15", dayCode: "MON", sessions: sessionsFor("MON") },
   { date: "2025-09-16", dayCode: "TUE", sessions: sessionsFor("TUE") },
   { date: "2025-09-17", dayCode: "WED", sessions: sessionsFor("WED") },
   { date: "2025-09-18", dayCode: "THURS", sessions: sessionsFor("THURS") },
@@ -117,7 +117,7 @@ export const aug11_sept26_2025_daily: DailyEntry[] = [
   { date: "2025-09-21", dayCode: "SUN", label: "Holiday", sessions: [] },
 
   // Week of Sep 22 — attachment does not list Mon 22
-  { date: "2025-09-22", dayCode: "MON", label: "Holiday", sessions: [] },
+  { date: "2025-09-22", dayCode: "MON", sessions: sessionsFor("MON") },
   { date: "2025-09-23", dayCode: "TUE", sessions: sessionsFor("TUE") },
   { date: "2025-09-24", dayCode: "WED", sessions: sessionsFor("WED") },
   { date: "2025-09-25", dayCode: "THURS", sessions: sessionsFor("THURS") },
