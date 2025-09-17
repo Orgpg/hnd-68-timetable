@@ -187,10 +187,19 @@ export function Footer() {
         {/* Bottom Bar: Copyright */}
         <div
           className="mt-10 pt-6 border-t border-gray-200 text-center text-sm text-gray-500
-        dark:border-gray-800 dark:text-gray-500"
+  dark:border-gray-800 dark:text-gray-500"
         >
           <p className="mb-1">
-            © {new Date().getFullYear()} waiphyoaung. All rights reserved.
+            © {new Date().getFullYear()}{" "}
+            <a
+              href="https://waiphyoaung.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              waiphyoaung.dev
+            </a>
+            . All rights reserved.
           </p>
           <p className="text-xs">Version 1.1.0</p> {/* Added Version */}
         </div>

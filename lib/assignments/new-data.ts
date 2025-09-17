@@ -1,4 +1,12 @@
-import type { Assignment } from "../types"
+export interface Assignment {
+  no: number;
+  unitName: string;
+  assignmentNo: number;
+  handOutDate: string;
+  formativeAssessmentDate: string[];
+  handInDate: string;
+  presentationDemoDate: string | null;
+}
 
 export const assignments: Assignment[] = [
   {
@@ -64,4 +72,4 @@ export const assignments: Assignment[] = [
     handInDate: "1/Dec/2025 (Mon)",
     presentationDemoDate: null,
   },
-]
+];
