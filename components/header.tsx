@@ -136,7 +136,7 @@ export function Header() {
                 <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"></div>
               )}
             </Link>
-            <a
+            {/* <a
               href="https://github.com/Orgpg/hnd-68-timetable"
               target="_blank"
               rel="noopener noreferrer"
@@ -144,7 +144,7 @@ export function Header() {
               aria-label="View Source Code on GitHub"
             >
               <Github className="h-5 w-5" />
-            </a>
+            </a> */}
             {/* Desktop Theme Toggle */}
             {mounted && (
               <Button

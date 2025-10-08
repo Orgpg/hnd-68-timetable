@@ -70,7 +70,7 @@ export const septNov2025_daily: DailyEntry[] = [
   },
 
   // Week of Oct 8 (Wed–Fri), then Oct 13–17, 20–24, 27–31
-  { date: "2025-10-08", dayCode: "WED", sessions: wedThuFriSessions },
+  { date: "2025-10-08", dayCode: "WED", sessions: wedSessions },
   { date: "2025-10-09", dayCode: "THURS", sessions: wedThuFriSessions },
   { date: "2025-10-10", dayCode: "FRI", sessions: wedThuFriSessions },
   { date: "2025-10-11", dayCode: "SAT", label: "Holiday", sessions: [] },
@@ -78,7 +78,7 @@ export const septNov2025_daily: DailyEntry[] = [
 
   { date: "2025-10-13", dayCode: "MON", sessions: monTueSessions },
   { date: "2025-10-14", dayCode: "TUE", sessions: monTueSessions },
-  { date: "2025-10-15", dayCode: "WED", sessions: wedThuFriSessions },
+  { date: "2025-10-15", dayCode: "WED", sessions: wedSessions },
   { date: "2025-10-16", dayCode: "THURS", sessions: wedThuFriSessions },
   { date: "2025-10-17", dayCode: "FRI", sessions: wedThuFriSessions },
   { date: "2025-10-18", dayCode: "SAT", label: "Holiday", sessions: [] },
@@ -86,7 +86,7 @@ export const septNov2025_daily: DailyEntry[] = [
 
   { date: "2025-10-20", dayCode: "MON", sessions: monTueSessions },
   { date: "2025-10-21", dayCode: "TUE", sessions: monTueSessions },
-  { date: "2025-10-22", dayCode: "WED", sessions: wedThuFriSessions },
+  { date: "2025-10-22", dayCode: "WED", sessions: wedSessions },
   { date: "2025-10-23", dayCode: "THURS", sessions: wedThuFriSessions },
   { date: "2025-10-24", dayCode: "FRI", sessions: wedThuFriSessions },
   { date: "2025-10-25", dayCode: "SAT", label: "Holiday", sessions: [] },
@@ -94,7 +94,7 @@ export const septNov2025_daily: DailyEntry[] = [
 
   { date: "2025-10-27", dayCode: "MON", sessions: monTueSessions },
   { date: "2025-10-28", dayCode: "TUE", sessions: monTueSessions },
-  { date: "2025-10-29", dayCode: "WED", sessions: wedThuFriSessions },
+  { date: "2025-10-29", dayCode: "WED", sessions: wedSessions },
   { date: "2025-10-30", dayCode: "THURS", sessions: wedThuFriSessions },
   { date: "2025-10-31", dayCode: "FRI", sessions: wedThuFriSessions },
   { date: "2025-11-01", dayCode: "SAT", label: "Holiday", sessions: [] },
@@ -103,7 +103,7 @@ export const septNov2025_daily: DailyEntry[] = [
   // Nov 3–7
   { date: "2025-11-03", dayCode: "MON", sessions: monTueSessions },
   { date: "2025-11-04", dayCode: "TUE", sessions: monTueSessions },
-  { date: "2025-11-05", dayCode: "WED", sessions: wedThuFriSessions },
+  { date: "2025-11-05", dayCode: "WED", sessions: wedSessions },
   { date: "2025-11-06", dayCode: "THURS", sessions: wedThuFriSessions },
   { date: "2025-11-07", dayCode: "FRI", sessions: wedThuFriSessions },
   { date: "2025-11-08", dayCode: "SAT", label: "Holiday", sessions: [] },
@@ -112,7 +112,7 @@ export const septNov2025_daily: DailyEntry[] = [
   // Nov 10–14
   { date: "2025-11-10", dayCode: "MON", sessions: monTueSessions },
   { date: "2025-11-11", dayCode: "TUE", sessions: monTueSessions },
-  { date: "2025-11-12", dayCode: "WED", sessions: wedThuFriSessions },
+  { date: "2025-11-12", dayCode: "WED", sessions: wedSessions },
   { date: "2025-11-13", dayCode: "THURS", sessions: wedThuFriSessions },
   { date: "2025-11-14", dayCode: "FRI", sessions: wedThuFriSessions },
   { date: "2025-11-15", dayCode: "SAT", label: "Holiday", sessions: [] },
@@ -121,5 +121,5 @@ export const septNov2025_daily: DailyEntry[] = [
   // Nov 17–19 (end)
   { date: "2025-11-17", dayCode: "MON", sessions: monTueSessions },
   { date: "2025-11-18", dayCode: "TUE", sessions: monTueSessions },
-  { date: "2025-11-19", dayCode: "WED", sessions: wedThuFriSessions },
+  { date: "2025-11-19", dayCode: "WED", sessions: wedSessions },
 ];

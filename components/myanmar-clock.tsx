@@ -2,68 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { getCurrentDay, getTomorrowDay } from "@/lib/utils/date-utils";
-import {
-  Calendar,
-  MapPin,
-  Sunrise,
-  GraduationCap,
-  Clock,
-  AlertTriangle,
-  BookOpen,
-} from "lucide-react";
+import { Calendar, MapPin, Sunrise, GraduationCap, User } from "lucide-react";
 import Image from "next/image";
-import { assignments } from "@/lib/assignments/data";
-import { Button } from "./ui/button";
+import { tr } from "date-fns/locale";
 import Link from "next/link";
-
-// Helper function to parse assignment dates
-function parseAssignmentDate(dateStr: string): Date {
-  // Parse format like "18/Oct/2025 (Sat)"
-  const datePart = dateStr.split(" ")[0]; // "18/Oct/2025"
-  const [day, month, year] = datePart.split("/");
-
-  const monthMap: { [key: string]: number } = {
-    Jan: 0,
-    Feb: 1,
-    Mar: 2,
-    Apr: 3,
-    May: 4,
-    Jun: 5,
-    Jul: 6,
-    Aug: 7,
-    Sep: 8,
-    Oct: 9,
-    Nov: 10,
-    Dec: 11,
-  };
-
-  return new Date(Number.parseInt(year), monthMap[month], Number.parseInt(day));
-}
-
-// Helper function to calculate time remaining
-function getTimeRemaining(targetDate: Date): {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  isOverdue: boolean;
-} {
-  const now = new Date();
-  const difference = targetDate.getTime() - now.getTime();
-
-  if (difference < 0) {
-    return { days: 0, hours: 0, minutes: 0, seconds: 0, isOverdue: true };
-  }
-
-  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-  return { days, hours, minutes, seconds, isOverdue: false };
-}
 
 export function MyanmarClock() {
   const [time, setTime] = useState<Date>(new Date());
@@ -78,19 +20,6 @@ export function MyanmarClock() {
 
   const currentDay = getCurrentDay();
   const tomorrowDay = getTomorrowDay();
-
-  const upcomingAssignments = assignments
-    .map((assignment) => ({
-      ...assignment,
-      deadline: parseAssignmentDate(assignment.handInDate),
-    }))
-    .filter((assignment) => assignment.deadline >= new Date())
-    .sort((a, b) => a.deadline.getTime() - b.deadline.getTime());
-
-  const nextAssignment = upcomingAssignments[0];
-  const timeRemaining = nextAssignment
-    ? getTimeRemaining(nextAssignment.deadline)
-    : null;
 
   return (
     <div className="relative w-full max-w-6xl mx-auto p-4">
@@ -127,63 +56,42 @@ export function MyanmarClock() {
               </div>
             </div>
 
+            {/* Time Display - Center with enhanced glass effect */}
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="text-center p-6 bg-white/10 dark:bg-black/20 backdrop-blur-2xl rounded-2xl border border-white/20 dark:border-white/10 shadow-xl">
-                {nextAssignment && timeRemaining ? (
-                  <>
-                    <div className="flex items-center gap-2 mb-3 mt-5">
-                      <Clock className="h-5 w-5 text-cyan-400" />
-                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                        Next Deadline
-                      </span>
-                    </div>
-                    <div className="text-3xl font-bold font-mono bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-2 tracking-tight">
-                      {timeRemaining.days}d {timeRemaining.hours}h{" "}
-                      {timeRemaining.minutes}m
-                    </div>
-                    <div className="text-lg font-medium text-cyan-400 dark:text-cyan-300 mb-2">
-                      {timeRemaining.seconds}s
-                    </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                      {nextAssignment.unitName}
-                      <br />
-                      Assignment {nextAssignment.assignmentNo}
-                    </div>
-                  </>
-                ) : (
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-green-400 mb-2">
-                      All Done! 🎉
-                    </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                      No upcoming deadlines
-                    </div>
-                  </div>
-                )}
+                <div className="text-5xl font-bold font-mono bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-2 tracking-tight">
+                  {time.toLocaleTimeString("en-US", {
+                    timeZone: "Asia/Yangon",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}
+                </div>
+                <div className="text-xl font-medium text-cyan-400 dark:text-cyan-300">
+                  {time
+                    .toLocaleTimeString("en-US", {
+                      timeZone: "Asia/Yangon",
+                      hour12: true,
+                    })
+                    .slice(-2)}
+                </div>
 
+                {/* Enhanced seconds indicator */}
                 <div className="mt-3 w-16 h-1.5 bg-white/20 dark:bg-black/30 rounded-full overflow-hidden backdrop-blur-sm">
                   <div
                     className="h-full bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-1000 ease-linear rounded-full"
-                    style={{
-                      width: `${
-                        timeRemaining ? (timeRemaining.seconds / 60) * 100 : 0
-                      }%`,
-                    }}
+                    style={{ width: `${(time.getSeconds() / 60) * 100}%` }}
                   ></div>
                 </div>
               </div>
             </div>
 
+            {/* Myanmar Time Badge - Bottom with enhanced glass */}
             <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
               <div className="flex items-center gap-2 bg-white/15 dark:bg-black/25 backdrop-blur-2xl rounded-full px-4 py-2 border border-white/20 dark:border-white/10 shadow-lg">
                 <MapPin className="h-4 w-4 text-cyan-400" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                  {time.toLocaleTimeString("en-US", {
-                    timeZone: "Asia/Yangon",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                  })}
+                  Myanmar Time
                 </span>
                 <Sunrise className="h-4 w-4 text-purple-400" />
               </div>
@@ -193,6 +101,7 @@ export function MyanmarClock() {
 
         {/* Information Section - Right on desktop, Bottom on mobile */}
         <div className="flex-1 max-w-md mx-auto lg:mx-0 space-y-6">
+          {/* Program Info Card with liquid glass */}
           <div className="bg-white/10 dark:bg-black/20 backdrop-blur-3xl rounded-3xl border border-white/20 dark:border-white/10 p-6 shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 rounded-3xl"></div>
             <div className="relative">
@@ -201,19 +110,19 @@ export function MyanmarClock() {
                   <GraduationCap className="h-5 w-5 text-cyan-400" />
                 </div>
                 <span className="font-bold text-lg text-gray-800 dark:text-gray-100">
-                  Assignment Tracker
+                  Year 1, Module 1
                 </span>
               </div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 bg-purple-400/20 rounded-xl backdrop-blur-sm">
-                  <AlertTriangle className="h-4 w-4 text-purple-400" />
+                  <User className="h-4 w-4 text-purple-400" />
                 </div>
                 <span className="text-gray-600 dark:text-gray-300">
-                  {upcomingAssignments.length} assignments pending
+                  Program Leader - Daw Yee Mon
                 </span>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 italic leading-relaxed">
-                Real-time countdown to your next assignment deadline.
+                Your personalized class schedule with real-time updates.
               </p>
             </div>
           </div>
@@ -269,19 +178,6 @@ export function MyanmarClock() {
                 })}
               </span>
             </div>
-          </div>
-
-          <div className="mt-4">
-            <Button
-              asChild
-              size="sm"
-              className="rounded-full px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-            >
-              <Link href="/assignments">
-                <BookOpen className="h-4 w-4 mr-2" />
-                View Assignments
-              </Link>
-            </Button>
           </div>
         </div>
       </div>
