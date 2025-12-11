@@ -1,15 +1,15 @@
-import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { Montserrat } from 'next/font/google'
-import "./globals.css"
-import { Toaster } from "react-hot-toast"
-import { ThemeProvider } from "@/components/theme-provider"
-import Script from "next/script" // Import Script from next/script
+import type React from "react";
+import type { Metadata, Viewport } from "next";
+import { Montserrat } from "next/font/google";
+import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "@/components/theme-provider";
+import Script from "next/script"; // Import Script from next/script
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   display: "swap",
-})
+});
 
 export const metadata: Metadata = {
   title: "HND 68 Timetable",
@@ -17,15 +17,15 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "icons/favicon-16x16.png", type: "image/png", sizes: "16x16" },
-      { url: "icons/favicon-32x32.png", type: "image/png", sizes: "32x32" },
-      { url: "icons/favicon-48x48.png", type: "image/png", sizes: "48x48" },
+      { url: "/icons/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/icons/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icons/favicon-48x48.png", type: "image/png", sizes: "48x48" },
     ],
-    apple: [{ url: "icons/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
     other: [
       {
         rel: "manifest",
-        url: "icons/site.webmanifest",
+        url: "/icons/site.webmanifest",
       },
     ],
   },
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     creator: "@vercel",
     images: ["/logo.png?height=630&width=1200"],
   },
-}
+};
 
 export const viewport: Viewport = {
   themeColor: [
@@ -62,9 +62,13 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
   colorScheme: "dark light",
-}
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={montserrat.className}>
@@ -74,5 +78,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

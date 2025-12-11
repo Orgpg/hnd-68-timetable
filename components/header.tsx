@@ -7,6 +7,8 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+
 
 export function Header() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -36,8 +38,14 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-600 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-              <GraduationCap className="h-6 w-6 text-white" />
+            <div className="flex h-10 w-10 overflow-hidden items-center justify-center rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+              <Image
+                src="/gusto-logo.png" // <-- your logo file here (public/logo.png)
+                alt="HND Logo"
+                width={40}
+                height={40}
+                className="object-cover"
+              />
             </div>
             <div className="sm:block">
               <h1 className="text-xl font-bold bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-700 bg-clip-text text-transparent">
