@@ -46,13 +46,13 @@ export function getDailyEntryByDate(date: Date): DailyEntry | undefined {
 export function getPeriodLabelFor(key: string): string {
   if (key >= "2025-08-04" && key <= "2025-08-10") return "From 4-Aug-2025 to 8-Aug-2025"
   if (key >= "2025-08-11" && key <= "2025-09-28") return "From 11-Aug-2025 to 26-Sept-2025"
-  if (key >= "2025-09-29" && key <= "2025-11-19") return "From 29-Sept-2025 to 19-Nov-2025"
-  if (key >= "2025-12-15" && key <= "2026-01-04") return "From 15-Dec-2025 to 4-Jan-2026"
+  if (key >= "2025-09-29" && key <= "2025-12-14") return "From 29-Sept-2025 to 14-Dec-2025"
+  if (key >= "2025-12-15" && key <= "2026-04-24") return "From 15-Dec-2025 to 24-Apr-2026"
   // Fallbacks
   if (key < "2025-08-11") return "From 4-Aug-2025 to 8-Aug-2025"
   if (key < "2025-09-29") return "From 11-Aug-2025 to 26-Sept-2025"
   if (key < "2025-12-15") return "From 29-Sept-2025 to 19-Nov-2025"
-  return "From 15-Dec-2025 to 4-Jan-2026"
+  return "From 15-Dec-2025 to 24-Apr-2026"
 }
 
 // NEW: get all daily entries sorted across all periods
