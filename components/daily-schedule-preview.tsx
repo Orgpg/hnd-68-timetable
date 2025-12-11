@@ -2,15 +2,7 @@
 
 import type { ClassSession, DayOfWeek } from "@/lib/timetable/data";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Clock,
-  BookOpen,
-  Calendar,
-  GraduationCap,
-  Home,
-  Sun,
-  Zap,
-} from "lucide-react";
+import { Clock, BookOpen, Calendar, Home, Sun, Zap } from "lucide-react";
 import {
   getDayName,
   getUnitIcon,
@@ -20,6 +12,8 @@ import {
   parseTime,
   getMyanmarDate,
 } from "@/lib/utils/date-utils";
+import { getTeacherImage } from "@/lib/utils/teacher-images";
+import Image from "next/image";
 
 interface DailySchedulePreviewProps {
   day: DayOfWeek;
@@ -200,10 +194,17 @@ export function DailySchedulePreview({
                       {session.unit}
                     </h4>
 
-                    {/* Teacher info */}
-                    <div className="flex items-center gap-2">
-                      <div className="bg-black/20 backdrop-blur-sm rounded-full p-1.5">
-                        <GraduationCap className="h-4 w-4 text-white/90" />
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/30 bg-black/20 backdrop-blur-sm flex-shrink-0">
+                        <Image
+                          src={
+                            getTeacherImage(session.teacher) ||
+                            "/placeholder.svg"
+                          }
+                          alt={session.teacher}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
                       <span
                         className={`text-sm text-white/90 ${

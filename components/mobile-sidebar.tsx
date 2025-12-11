@@ -14,7 +14,6 @@ import {
   GraduationCap,
   CalendarDays,
   Home,
-  Github,
   Info,
   BookOpenCheck,
   Mail,
@@ -81,13 +80,6 @@ export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
       label: "Feedback",
       pathOrSection: "/feedback",
       description: "Send feedback",
-    },
-    {
-      icon: Github,
-      label: "GitHub",
-      pathOrSection: "https://github.com/Orgpg/hnd-68-timetable",
-      description: "Source code",
-      isExternal: true,
     },
   ];
 

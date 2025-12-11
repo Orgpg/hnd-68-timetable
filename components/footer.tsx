@@ -132,7 +132,7 @@ export function Footer() {
                   Designed by Wai Phyo Aung
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="https://github.com/Orgpg/hnd-68-timetable"
                   target="_blank"
@@ -142,7 +142,7 @@ export function Footer() {
                   <Github className="h-4 w-4" />
                   View Source Code
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a
                   href="mailto:info@waiphyoaung.dev"
@@ -201,7 +201,7 @@ export function Footer() {
             </a>
             . All rights reserved.
           </p>
-          <p className="text-xs">Version 1.1.0</p> {/* Added Version */}
+          <p className="text-xs">Version 1.1.1</p> {/* Added Version */}
         </div>
       </div>
     </footer>

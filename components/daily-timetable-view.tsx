@@ -20,7 +20,6 @@ import {
   ChevronRight,
   BookOpen,
   Clock,
-  GraduationCap,
   Home,
   Sparkles,
   Sun,
@@ -31,6 +30,8 @@ import {
   ygnDateKey,
   getPeriodLabelFor,
 } from "@/lib/timetable";
+import { getTeacherImage } from "@/lib/utils/teacher-images";
+import Image from "next/image";
 
 // Helper to add days
 function addDays(d: Date, n: number) {
@@ -274,10 +275,17 @@ export function DailyTimetableView() {
                         {session.unit}
                       </h3>
 
-                      {/* Teacher info */}
                       <div className="flex items-center gap-3">
-                        <div className="bg-black/20 backdrop-blur-sm rounded-full p-2">
-                          <GraduationCap className="h-5 w-5" />
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/30 bg-black/20 backdrop-blur-sm flex-shrink-0">
+                          <Image
+                            src={
+                              getTeacherImage(session.teacher) ||
+                              "/placeholder.svg"
+                            }
+                            alt={session.teacher}
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                         <span
                           className={`text-lg opacity-90 ${

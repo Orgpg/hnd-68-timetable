@@ -4,7 +4,8 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ReminderForm } from "@/components/reminder-form"
 import { BellRing } from "lucide-react"
-import React from "react" // Import React for Suspense
+import React from "react"
+import { motion } from "framer-motion"
 
 export default function ReminderPage() {
   return (
@@ -12,8 +13,18 @@ export default function ReminderPage() {
       <Header />
 
       <main className="flex-1 py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8 sm:mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-7xl mx-auto px-4"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-center mb-8 sm:mb-12"
+          >
             <BellRing className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-teal-600 dark:text-teal-400 mb-4" />
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-gray-100 mb-3">
               Daily Timetable{" "}
@@ -24,15 +35,19 @@ export default function ReminderPage() {
             <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
               Never miss a class! Get your daily schedule delivered straight to your inbox.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="max-w-xl mx-auto">
-            {/* Wrap ReminderForm with Suspense to resolve useSearchParams error */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="max-w-xl mx-auto"
+          >
             <React.Suspense fallback={<div>Loading reminder form...</div>}>
               <ReminderForm />
             </React.Suspense>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </main>
 
       <Footer />
