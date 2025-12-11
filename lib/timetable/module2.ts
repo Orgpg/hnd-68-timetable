@@ -20,7 +20,7 @@ export const module2_daily: DailyEntry[] = [
         date: "2025-12-15",
         dayCode: "MON",
         label: "Orientation",
-        sessions: [{ time: "9:00-10:30", unit: "Orientation", teacher: "" },
+        sessions: [{ time: "9:00-10:30", unit: "Orientation", teacher: "Daw Yee Mon" },
         { time: "10:45-12:15", unit: "Unit 13 - Website Design & Development", teacher: "Daw Win Sandar" },
         ],
 

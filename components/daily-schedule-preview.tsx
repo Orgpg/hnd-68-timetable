@@ -82,7 +82,7 @@ export function DailySchedulePreview({
       </div>
 
       {/* Header */}
-      <CardHeader className="relative z-10 pb-4 bg-black/20 backdrop-blur-sm border-b border-white/10">
+      <CardHeader className="relative p-5 z-10 pb-4 bg-black/20 backdrop-blur-sm border-b border-white/10">
         <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-white">
           <div className="flex items-center gap-3">
             <div
