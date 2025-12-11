@@ -20,6 +20,8 @@ import {
   BellRing,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
 interface MobileSidebarProps {
   onNavigate?: (section: string) => void;
@@ -105,9 +107,18 @@ export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
         dark:border-gray-700/50"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-600 shadow-lg">
-              <GraduationCap className="h-6 w-6 text-white" />
-            </div>
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="flex h-10 w-10 overflow-hidden items-center justify-center rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <Image
+                  src="/gusto-logo.png" // <-- your logo file here (public/logo.png)
+                  alt="HND Logo"
+                  width={40}
+                  height={40}
+                  className="object-cover"
+                />
+              </div>
+            </Link>
             <div>
               <SheetTitle className="text-left text-lg font-bold bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-700 bg-clip-text text-transparent">
                 HND 68 Schedule
@@ -187,7 +198,7 @@ export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-500 mt-2 flex items-center gap-1">
               <Info className="h-3 w-3" />
-              Version 1.1.0
+              Version 1.1.1
             </p>
           </div>
         </div>
