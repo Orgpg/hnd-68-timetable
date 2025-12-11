@@ -122,4 +122,9 @@ export const septNov2025_daily: DailyEntry[] = [
   { date: "2025-11-17", dayCode: "MON", sessions: monTueSessions },
   { date: "2025-11-18", dayCode: "TUE", sessions: monTueSessions },
   { date: "2025-11-19", dayCode: "WED", sessions: wedSessions },
+
+  { date: "2025-12-11", dayCode: "THURS", sessions: [] },
+  { date: "2025-12-12", dayCode: "FRI", sessions: [] },
+  { date: "2025-12-13", dayCode: "SAT", label: "Holiday", sessions: [] },
+  { date: "2025-12-14", dayCode: "SUN", label: "Holiday", sessions: [] },
 ];
