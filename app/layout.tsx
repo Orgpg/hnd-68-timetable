@@ -4,7 +4,6 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@/components/theme-provider";
-import Script from "next/script"; // Import Script from next/script
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -12,8 +11,10 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hnd68.waiphyoaung.dev"),
   title: "HND 68 Timetable",
-  description: "Real-time timetable viewer for HND 68 course",
+  description:
+    "Real-time timetable viewer for HND 68 course at Gusto College. Stay organized with your class schedule, Myanmar time, and daily previews.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -30,17 +31,17 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "HND 68 Timetable - Your Daily Schedule",
+    title: "HND 68 Timetable",
     description:
-      "Stay organized with your HND 68 class timetable, real-time Myanmar time, and daily schedule previews.",
-    url: "https://hnd68.vercel.app/",
+      "Real-time timetable viewer for HND 68 course at Gusto College. Stay organized with your class schedule and Myanmar time.",
+    url: "https://hnd68.waiphyoaung.dev",
     siteName: "HND 68 Timetable",
     images: [
       {
-        url: "/logo.png?height=630&width=1200",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "HND 68 Timetable App Preview",
+        alt: "HND 68 Timetable - Your Daily Schedule",
       },
     ],
     locale: "en_US",
@@ -48,11 +49,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HND 68 Timetable - Your Daily Schedule",
+    title: "HND 68 Timetable",
     description:
-      "Stay organized with your HND 68 class timetable, real-time Myanmar time, and daily schedule previews.",
-    creator: "@vercel",
-    images: ["/logo.png?height=630&width=1200"],
+      "Real-time timetable viewer for HND 68 course at Gusto College. Stay organized with your class schedule and Myanmar time.",
+    images: ["/og-image.jpg"],
   },
 };
 
@@ -72,7 +72,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={montserrat.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
           <Toaster position="top-center" />
         </ThemeProvider>
