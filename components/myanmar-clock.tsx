@@ -110,7 +110,7 @@ export function MyanmarClock() {
                   <GraduationCap className="h-5 w-5 text-cyan-400" />
                 </div>
                 <span className="font-bold text-lg text-gray-800 dark:text-gray-100">
-                  Year 1, Module 1
+                  Year 1, Module 2
                 </span>
               </div>
               <div className="flex items-center gap-3 mb-4">

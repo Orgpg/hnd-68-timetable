@@ -21,9 +21,7 @@ import {
   Target,
   ArrowUp,
 } from "lucide-react";
-import { getAllDailyEntriesSorted, type DailyEntry } from "@/lib/timetable";
-import { jul23_27_2025_daily } from "@/lib/timetable/jul-23-27-2025";
-import { jul28_aug3_2025_daily } from "@/lib/timetable/jul-28-aug-3-2025";
+import { getModule2DailyEntriesSorted, type DailyEntry } from "@/lib/timetable";
 import {
   formatSessionTime,
   getMyanmarDate,
@@ -116,38 +114,12 @@ function isWeekday(date: Date): boolean {
   return day >= 1 && day <= 5; // Monday (1) to Friday (5)
 }
 
-function getCompletedDailyEntries(): DailyEntry[] {
-  const allCompletedEntries = [
-    ...jul23_27_2025_daily,
-    ...jul28_aug3_2025_daily,
-  ];
-
-  return allCompletedEntries.map((entry) => ({
-    ...entry,
-    sessions: entry.sessions.map((session) => ({
-      time: session.time,
-      unit: session.unit,
-      subject: session.unit.replace(/^Unit \d+\s+-\s+/, ""),
-      teacher: session.teacher,
-    })),
-  }));
-}
-
-function getAllCombinedDailyEntries(): DailyEntry[] {
-  const completedEntries = getCompletedDailyEntries();
-  const currentEntries = getAllDailyEntriesSorted();
-
-  // Combine and sort by date
-  const allEntries = [...completedEntries, ...currentEntries];
-  return allEntries.sort((a, b) => a.date.localeCompare(b.date));
-}
-
 // ---------- Page ----------
 type StatusFilter = "all" | "upcoming" | "completed";
 
 export default function SchedulePage() {
   // Data
-  const all = useMemo(() => getAllCombinedDailyEntries(), []);
+  const all = useMemo(() => getModule2DailyEntriesSorted(), []);
   const weeks = useMemo(() => groupByWeek(all), [all]);
 
   // Live tick for status updates
