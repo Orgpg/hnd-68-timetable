@@ -49,7 +49,7 @@
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
     "mongoose": "latest",
-    "next": "15.2.6",
+    "next": "15.2.8",
     "next-themes": "latest",
     "nodemailer": "latest",
     "react": "^19",
